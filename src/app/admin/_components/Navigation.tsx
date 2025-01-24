@@ -8,7 +8,7 @@ export default function Navigation() {
   const router = useRouter();
 
   return (
-    <div className="w-[205px] h-screen bg-[#FFFFFF]">
+    <div className="h-screen bg-[#FFFFFF]">
       <div className="mt-6 ml-5 w-[165px] h-[44px]">
         <img src="Logo Container.png" alt="Logo" />
       </div>

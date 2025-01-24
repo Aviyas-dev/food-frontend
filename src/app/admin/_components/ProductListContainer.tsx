@@ -108,7 +108,9 @@ export default function ProductListContainer({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newDish),
+        
       });
+      console.log(newDish);
 
       if (!response.ok) {
         throw new Error("Failed to add dish");
@@ -136,35 +138,51 @@ export default function ProductListContainer({
   return (
     <div className="p-5">
       <h2 className="text-2xl font-bold mb-5">Dishes ({cards.length})</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {/* Хоол нэмэх хэсэг */}
-        <div
+      <div className="grid grid-cols-4 gap-4 p-4">
+       <div
           onClick={() => setIsAdding(true)}
-          className="flex flex-col items-center justify-center border-2 border-dashed border-[#EF4444] rounded-lg p-5 cursor-pointer hover:bg-gray-100"
+          className="border-2 border-dashed border-red-400 rounded-lg flex flex-col justify-center items-center p-4"
         >
           <PlusIcon className="bg-[#EF4444] rounded-full" size={32} />
-          <span className="mt-2 text-gray-600">Add new Dish</span>
+          <span className="text-sm text-gray-500 text-center mt-2">Add new Dish</span>
         </div>
-
-        {/* Хоол харуулах хэсэг */}
-        {cards.map((card) => (
-          <div
-            key={card._id}
-            className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md"
+        <div className="rounded-lg shadow-lg overflow-hidden border border-gray-200">
+    <img
+      src="https://via.placeholder.com/150"
+      alt="Dish"
+      className="w-full h-32 object-cover"
+    />
+    <div className="p-4">
+      <h3 className="text-lg font-semibold text-gray-800">Grilled Chicken Cobb Salad</h3>
+      <p className="text-sm text-gray-600 mt-2">
+        Fluffy pancakes stacked with fruits, cream, syrup, and powdered sugar.
+      </p>
+      <div className="flex justify-between items-center mt-4">
+        <p className="text-red-500 font-semibold">$12.99</p>
+        <button className="text-red-500 hover:bg-red-100 p-1 rounded">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
           >
-            <img
-              src={card.image || "default-image.png"}
-              alt={card.title}
-              className="w-full h-40 object-cover"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.232 5.232l3.536 3.536M9 11l6 6m0 0l-6-6m6 6L9 11"
             />
-            <div className="p-4">
-              <h3 className="text-lg font-bold text-[#EF4444]">{card.title}</h3>
-              <p className="text-sm text-gray-600 my-2">{card.description}</p>
-              <p className="text-base font-bold">${card.price}</p>
-            </div>
-          </div>
-        ))}
+          </svg>
+        </button>
       </div>
+    </div>
+  </div>
+        
+
+        
+        
+        </div>
 
       {/* Хоол нэмэх модал */}
       {isAdding && (
@@ -228,7 +246,7 @@ export default function ProductListContainer({
               />
               {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
             </label>
-            <div className="flex justify-end space-x-4">
+            <div className="flex justify-end space-x-4 mt-5">
               <button
                 onClick={() => setIsAdding(false)}
                 className="bg-gray-300 text-black px-4 py-2 rounded-md"
@@ -246,6 +264,12 @@ export default function ProductListContainer({
           </div>
         </div>
       )}
+      
+      
+      
+     
+
+      
     </div>
   );
 }

@@ -41,7 +41,7 @@ const categories = [
   return (
     <div className="p-5">
       {/* Дээд талын категори сонгох хэсэг */}
-      <div className="mb-5">
+      {/* <div className="mb-5">
         <div className="text-xl font-bold mb-3">Dishes category</div>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
@@ -58,7 +58,7 @@ const categories = [
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       
       <div>

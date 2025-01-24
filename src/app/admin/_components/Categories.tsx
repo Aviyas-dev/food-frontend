@@ -1,10 +1,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
-import Navigation from "./Navigation";
-import { AllDishesPage } from "./AllDishesPage";
 import AddNewCategory from "./AddNewCategory";
-import ProductListContainer from "./ProductListContainer";
-import EditDishModal from "./EditDishModal";
+
 
 type CategoryType = {
   categoryName: string;
@@ -24,36 +21,19 @@ export default function Categories() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [dishes, setDishes] = useState<DishType[]>([]);
   const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false);
-  const [selectedDish, setSelectedDish] = useState<DishType | null>(null);
-
-  // Fetch categories and dishes
+  
+  // Fetch categories 
   useEffect(() => {
     const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/food-category");
+       const response = await fetch("http://localhost:8000/food-category");
         const data = await response.json();
         setCategories(data);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      }
+     
     };
-    
-
-    const fetchDishes = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/food");
-        const data = await response.json()
-        console.log(data)
-        setDishes(data);
-      } catch (error) {
-        console.error("Failed to fetch dishes:", error);
-      }
-    };
-
     fetchCategories();
-    fetchDishes();
+    
   }, []);
-  console.log(dishes)
+  
   // Add a category
   const addCategory = async (categoryName: string) => {
     try {
@@ -85,8 +65,7 @@ export default function Categories() {
   };
 
   return (
-    <div className="flex gap-20 justify-center">
-      <Navigation />
+    <div >
       <div className="w-[1171px] mt-[24px]">
         <div className="bg-[#FFFFFF] w-[1171px] h-auto rounded-xl p-5">
           <h1 className="text-[#09090B] mb-5">Dishes Category</h1>
@@ -98,9 +77,7 @@ export default function Categories() {
               <div key={category._id} className="flex items-center gap-2">
                 <button className="flex items-center gap-2 rounded-full bg-gray-200 px-4 py-2">
                   {category.categoryName}
-                  <span className="text-red-500">
-                    {dishes?.filter((dish) => dish.category === category.categoryName).length}
-                  </span>
+                 
                 </button>
                 <button
                   className="text-red-500"
@@ -118,37 +95,13 @@ export default function Categories() {
             </button>
           </div>
         </div>
-        
-        {/* <ProductListContainer/> */}
-
-        {/* Add New Category Modal */}
         {isAddingCategory && (
           <AddNewCategory
             onAdd={(categoryName) => addCategory(categoryName)}
             onCancel={() => setIsAddingCategory(false)}
           />
         )}
-        <AllDishesPage />
-
-        {/* Edit Dish Modal */}
-        {selectedDish && (
-          <EditDishModal
-            dish={selectedDish}
-            onClose={() => setSelectedDish(null)}
-          />
-        )}
+        </div>
       </div>
-      <div className="flex flex-wrap gap-4">
-        {dishes.map((dish) => (
-          <button
-            key={dish._id}
-            className="bg-gray-200 rounded-full px-3 py-1 text-sm"
-            onClick={() => setSelectedDish(dish)}
-          >
-            {dish.title}
-          </button>
-        ))}
-      </div>
-    </div>
   );
 }

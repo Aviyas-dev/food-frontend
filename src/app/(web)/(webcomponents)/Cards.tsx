@@ -35,7 +35,7 @@ const Cards: React.FC = () => {
        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {category?.map((item) => (
-             <Card id={item._id}/>
+             <Card  id={item._id}/>
           ))}
         </div>
    
