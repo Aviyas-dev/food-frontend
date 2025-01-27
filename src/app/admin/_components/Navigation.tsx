@@ -1,37 +1,49 @@
-"use client";
+'use client'
+import { Logo } from "./Logo";
+import { LayoutDashboard } from "lucide-react";
+import { Settings } from "lucide-react";
+import { Truck } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Correct hook for App Router in Next.js
-import { Button } from "@/components/ui/button";
-import { TruckIcon, LayoutDashboard, SettingsIcon } from "lucide-react";
-
-export default function Navigation() {
-  const router = useRouter();
-
+import { usePathname } from "next/navigation";
+ 
+export const Navigation = () => {
+  const path = usePathname()
+  const splitedName = path.split("/", path.length)
+  const isSelectedMenu = splitedName[2] === 'menu' && "bg-primary text-primary-foreground";
+  const isSelectedOrders = splitedName[2] === 'orders' && "bg-primary text-primary-foreground"
+  const isSelectedSettings = splitedName[2] === 'settings' && "bg-primary text-primary-foreground"
   return (
-    <div className="h-screen bg-[#FFFFFF]">
-      <div className="mt-6 ml-5 w-[165px] h-[44px]">
-        <img src="Logo Container.png" alt="Logo" />
-      </div>
-      <div className="flex flex-col items-center mt-10 space-y-5">
-        <Link href="/admin/food-menu" onClick={() => router.push("/admin/food-menu")}>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-600"><LayoutDashboard />
-          Food Menu</div>
+    <div className="h-full py-9 px-5 flex flex-col gap-10 bg-background ">
+      <Link href={`/`}>
+        <div className="flex gap-2 ">
+          <div>
+            <Logo />
+          </div>
+          <div>
+            <h1 className=" text-lg font-semibold ">NomNom</h1>
+            <h2 className="text-xs text-muted-foreground  ">Swift delivery</h2>
+          </div>
+        </div>
+      </Link>
+ 
+      <div className="flex flex-col w-[165px] gap-6 ">
+        <Link href={`/admin/menu`}>
+          <button className={`flex px-6 py-2 ${isSelectedMenu} items-center gap-[10px] rounded-full`}>
+            <LayoutDashboard strokeWidth={1} />
+            <h3 className="text-sm font-medium  ">Food menu</h3>
+          </button>
         </Link>
-      </div>
-      <div className="flex justify-center mt-5">
-      <Link href="/admin/orders" onClick={() => router.push("/admin/orders")}>
-      <div className="flex items-center gap-2  px-4 py-2 rounded-full hover:bg-gray-600">
-          <TruckIcon />
-          Order</div>
-        </Link>
-      </div>
-      <div className="flex justify-center mt-5">
-        <Button variant="outline" onClick={() => router.push("/admin/settings")}>
-          <SettingsIcon className="border-none"/>
-          Settings
-        </Button>
+ 
+        <button className={`flex px-6 py-2 ${isSelectedOrders} items-center gap-[10px] rounded-full`}>
+          <Truck strokeWidth={1} />
+          <h3 className="text-sm font-medium  ">Orders</h3>
+        </button>
+        <button className={`flex px-6 py-2 ${isSelectedSettings} items-center gap-[10px] rounded-full`}>
+          <Settings strokeWidth={1} />
+          <h3 className="text-sm font-medium  ">Settings</h3>
+        </button>
       </div>
     </div>
   );
-}
+};
 

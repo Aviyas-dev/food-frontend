@@ -1,55 +1,40 @@
 'use client';
-import React, { useState } from "react";
+import { useAuthFetch } from "@/app/(Hooks)/FetchData";
+import { Badge } from "@/components/ui/badge";
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Link from "next/link";
+import React, { use, useState } from "react";
+import { CategoryType } from "./Dishes";
 
-const Categories: React.FC = () => {
-  const categories = [
-    "Appetizers",
-    "Salads",
-    "Pizzas",
-    "Lunch favorites",
-    "Main dishes",
-    "Fish & Sea foods",
-    "Side dish",
-    "Brunch",
-    "Desserts",
-  ];
-
-  const [selectedCategory, setSelectedCategory] = useState<string>("Appetizers");
-
-  const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category);
-  };
-
+export const Categories = () => {
+const categories: CategoryType[] = useAuthFetch("food-category") || [];
   return (
-    <div className="p-4 bg-gray-800 text-white mx-auto">
-      <h2 className="text-lg font-semibold mb-4">Categories</h2>
-      <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide">
-        {/* Left Scroll Button */}
-        <button className="text-white px-2 text-lg">{"<"}</button>
-
-        {/* Categories */}
-        <div className="flex space-x-2 flex-nowrap mx-auto">
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                selectedCategory === category
-                  ? "bg-red-500 text-white"
-                  : "bg-white text-gray-800"
-              }`}
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category}
-            </button>
+    <div className="py-8 flex flex-col gap-9">
+      <h1 className="text-3xl font-semibold text-primary-foreground">Categories</h1>
+      <Carousel
+      opts={{
+        align: "start",
+      }}
+      className="flex justify-center">
+        <CarouselPrevious />
+        <CarouselContent className="whitespace-nowrap flex gap-2 px-5 w-[1648px]">
+          <Link href={"/"}>
+          <Badge
+          variant={"destructive"}
+          className="rounded-full text-lg font-normal px-5 py-1">All dishes</Badge>
+          </Link>
+          {categories.map((category)=> (
+            <Link href={`${category._id}`} key={category._id}>
+            <Badge
+            variant={"outline"}
+            className="bg-background text-primary rounded-full text-lg font-normal px-5 py-1">{category.categoryName}</Badge>
+            </Link>
           ))}
-        </div>
-
-        {/* Right Scroll Button */}
-        <button className="text-white px-2 text-lg">{">"}</button>
-      </div>
+        </CarouselContent>
+        <CarouselNext />
+      </Carousel>
+    
     </div>
   );
 };
-
-export default Categories;
 

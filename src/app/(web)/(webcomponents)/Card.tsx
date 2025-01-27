@@ -1,35 +1,24 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Food } from "./Cards";
+import { Card } from "@/components/ui/card"
+import { AddOrder } from "./AddOrder";
 
 
-
-export const Card = ({ id }: { id: string }) => {
-  const [foods, setFoods] = useState<Food[]>();
-
-  useEffect(() => {
-    const fetchFood = async () => {
-      const response = await fetch(`http://localhost:8000/food?category=${id}`);
-      const data = await response.json();
-      setFoods(data);
-    };
-    fetchFood();
-  }, [id]);
-
-  console.log(foods);
-
-  return <div className="bg-white rounded-lg shadow overflow-hidden">{foods?.map((food)=> 
-  <div className="text-gray-600 text-sm">{food?.foodName}</div>)}</div>
-
+export const CardComp = ({ food, id }: any) => {
+  return (
+    <Card className="border rounded-[20px] bg-background p-4 w-[397.33px] h-[342px] flex flex-col gap-5 items-center">
+      <div 
+      className={`w-[365.33px] h-[210px] bg-cover bg-center rounded-xl flex justify-end items-end p-5`}
+      style={{ backgroundImage: `url(${food.image})`}}
+      >
+        <AddOrder food={food} id={id} />
+      </div>
+      <div className="grid">
+        <div className="flex justify-between items-center">
+          <span className="text-red-500 text-2xl font-semibold">{food.name}</span>
+          <span className="text-lg font-semibold">${food.price}</span>
+        </div>
+        <h4 className="text-sm">{food.Ingredients}</h4>
+      </div>
+    </Card>
+    
+  );
 };
-{/* <div class="bg-white rounded-lg shadow overflow-hidden">
-        <img src="image-url" alt="Finger food" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h3 class="text-lg font-bold text-gray-900">Finger food</h3>
-          <p class="text-gray-600 text-sm">Fluffy pancakes stacked with fruits, cream, syrup, and powdered sugar.</p>
-          <div class="flex justify-between items-center mt-4">
-            <span class="text-red-600 text-lg font-bold">$12.99</span>
-            <button class="bg-red-500 text-white p-2 rounded-full hover:bg-red-600">
-              <span class="text-lg">+</span>
-            </button>
-          </div> */}
