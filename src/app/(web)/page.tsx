@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Header } from "./(webcomponents)/Header";
 import { Categories } from "./(webcomponents)/Categories";
 import { Dishes } from "./(webcomponents)/Dishes";
+import { Footer } from "./(webcomponents)/Footer";
  
 export default function Home() {
   return (
@@ -15,6 +16,9 @@ export default function Home() {
       <div className="px-[240px]">
         <Categories />
         <Dishes/>
+      </div>
+      <div>
+      <Footer/>
       </div>
     </div>
   );
