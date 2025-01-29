@@ -13,9 +13,6 @@ export const Dishes = () => {
   const params = useParams();
   const foodCategory: CategoryType[] = useAuthFetch("food-category") || [];
  
-  //   const grouped = Object.groupBy(food, ({ category }) => category);
- 
-  //   console.log(grouped)
   return (
     <div className="flex flex-col gap-5">
       {!params.id

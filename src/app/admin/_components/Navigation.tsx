@@ -5,6 +5,7 @@ import { Settings } from "lucide-react";
 import { Truck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
  
 export const Navigation = () => {
   const path = usePathname()
@@ -13,11 +14,11 @@ export const Navigation = () => {
   const isSelectedOrders = splitedName[2] === 'orders' && "bg-primary text-primary-foreground"
   const isSelectedSettings = splitedName[2] === 'settings' && "bg-primary text-primary-foreground"
   return (
-    <div className="h-full py-9 px-5 flex flex-col gap-10 bg-background ">
+    <div className="h-screen py-9 px-5 flex flex-col gap-10 bg-background fixed top-0 left-0">
       <Link href={`/`}>
         <div className="flex gap-2 ">
           <div>
-            <Logo />
+           <Logo/>
           </div>
           <div>
             <h1 className=" text-lg font-semibold ">NomNom</h1>
@@ -33,11 +34,13 @@ export const Navigation = () => {
             <h3 className="text-sm font-medium  ">Food menu</h3>
           </button>
         </Link>
- 
+
+        <Link href={`/admin/orders`}>
         <button className={`flex px-6 py-2 ${isSelectedOrders} items-center gap-[10px] rounded-full`}>
           <Truck strokeWidth={1} />
           <h3 className="text-sm font-medium  ">Orders</h3>
         </button>
+        </Link>
         <button className={`flex px-6 py-2 ${isSelectedSettings} items-center gap-[10px] rounded-full`}>
           <Settings strokeWidth={1} />
           <h3 className="text-sm font-medium  ">Settings</h3>

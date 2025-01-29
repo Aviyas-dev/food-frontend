@@ -29,6 +29,7 @@ export type CategoryType = {
                {!params.id
                ? foodCategory.map((category) => {
                 const categoryFoods = foods.filter((food) => food.category === category._id);
+
                 if (categoryFoods.length === 0) return null;
                 return(
                     <div key={category._id}>
@@ -43,8 +44,9 @@ export type CategoryType = {
             : foodCategory
             ?.filter((category) => category._id === params.id)
             .map((category) => (
-                <div>
+                <div   key={category._id}>
                     <FilteredFood
+        
                     _id={category._id}
                     categoryName={category.categoryName}
                     foods={foods}

@@ -1,9 +1,8 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus, X } from "lucide-react";
+import { Plus, X, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
- 
 import {
   Dialog,
   DialogClose,
@@ -18,13 +17,15 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useAuthFetch } from "@/app/(Hooks)/FetchData";
 import { CategoryType } from "./Dishes";
- 
+
 export const Category = () => {
-  const foodCategory : CategoryType[] = useAuthFetch("food-category") || [];
-  const [newCategory, setNewCategory] = useState<string>();
- 
-  const addCategory = () => {
-    fetch("http://localhost:8000/food-category", {
+  const foodCategory: CategoryType[] = useAuthFetch("food-category") || [];
+  const [newCategory, setNewCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const addCategory = async () => {
+    await fetch("http://localhost:8000/food-category", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -34,34 +35,50 @@ export const Category = () => {
     });
     setNewCategory("");
   };
- 
+
+  const deleteCategory = async (id: string) => {
+    const res = await fetch(`http://localhost:8000/food-category/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      window.location.reload(); // Устгасны дараа хуудас дахин ачаална
+    } else {
+      console.error("Failed to delete category");
+    }
+  };
+
   return (
-    <div className=" w-full p-6 rounded-xl  flex flex-col gap-4 bg-background ">
-      <h4 className=" text-xl font-semibold  ">Dishes Category</h4>
-      <div className="flex flex-wrap gap-3 ">
+    <div className="w-full p-6 rounded-xl flex flex-col gap-4 bg-background">
+      <h4 className="text-xl font-semibold">Dishes Category</h4>
+      <div className="flex flex-wrap gap-3">
         <Link href={`/admin/menu`}>
           <Badge
             variant="outline"
-            className=" rounded-full border py-2 px-4 flex gap-2 text-sm font-medium "
+            className="rounded-full border py-2 px-4 flex gap-2 text-sm font-medium"
           >
             All dishes
           </Badge>
         </Link>
         {foodCategory?.map((category: { _id: string; categoryName: string }) => {
           return (
-            <Link href={`/admin/menu/${category._id}`} key={category._id}>
-              <Badge
-                variant="outline"
-                className=" rounded-full border py-2 px-4 flex gap-2 text-sm font-medium "
-              >
-                {category.categoryName}
-              </Badge>
-            </Link>
+            <Badge
+              key={category._id}
+              variant="outline"
+              className="rounded-full border py-2 px-4 flex items-center gap-2 text-sm font-medium cursor-pointer hover:bg-red-500 hover:text-white transition"
+              onClick={() => {
+                setSelectedCategory(category._id);
+                setIsDialogOpen(true);
+              }}
+            >
+              {category.categoryName}
+              <Trash2 className="w-4 h-4" />
+            </Badge>
           );
         })}
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="destructive" className="rounded-full  p-[10px]">
+            <Button variant="destructive" className="rounded-full p-[10px]">
               <Plus />
             </Button>
           </DialogTrigger>
@@ -78,7 +95,6 @@ export const Category = () => {
                 placeholder="Type category name..."
                 onChange={(e) => setNewCategory(e.target.value)}
                 required
-                pattern="[A-Za-z]"
               />
             </div>
             <DialogFooter>
@@ -93,6 +109,24 @@ export const Category = () => {
                 >
                   Add category
                 </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="flex flex-col gap-6 w-[400px] p-6">
+            <DialogHeader className="pb-4">
+              <DialogTitle>Confirm Delete</DialogTitle>
+            </DialogHeader>
+            <p>Are you sure you want to delete this category?</p>
+            <DialogFooter>
+              <Button variant="destructive" onClick={() => deleteCategory(selectedCategory!)}>
+                Yes, Delete
+              </Button>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
               </DialogClose>
             </DialogFooter>
           </DialogContent>

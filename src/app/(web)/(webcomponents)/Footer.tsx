@@ -12,7 +12,7 @@ import { Facebook, Instagram } from "lucide-react";
 export const Footer = () => {
     
 return (
-    <footer className="bg-black text-white py-8">
+    <footer className="bg-black text-white py-8 mt-10">
       {/* Carousel Section */}
       <div className="bg-red-500 py-3 overflow-hidden">
       <Carousel
