@@ -5,7 +5,7 @@ import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from "@/com
 import Link from "next/link";
 import React, { use, useState } from "react";
 import { CategoryType } from "./Dishes";
-
+ 
 export const Categories = () => {
 const categories: CategoryType[] = useAuthFetch("food-category") || [];
   return (
@@ -37,4 +37,5 @@ const categories: CategoryType[] = useAuthFetch("food-category") || [];
     </div>
   );
 };
+
 
