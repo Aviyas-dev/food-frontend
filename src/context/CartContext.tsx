@@ -27,15 +27,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
-      const existingItem = prev.find((i) => i._id === item._id);
-      if (existingItem) {
-        return prev.map((i) =>
-          i._id === item._id ? { ...i, quantity: i.quantity + item.quantity } : i
-        );
-      }
-      return [...prev, item];
+      return [...prev, { ...item, _id: item._id + "-" + new Date().getTime() }];
     });
   };
+  
 
   const removeFromCart = (id: string) => {
     setCart((prev) => prev.filter((item) => item._id !== id));
