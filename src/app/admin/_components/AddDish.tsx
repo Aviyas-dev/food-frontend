@@ -29,7 +29,7 @@ import {
     });
    
     const addDish = async () => {
-      await fetch("http://localhost:8000/food/", {
+      await fetch("${process.env.NEXT_PUBLIC_BACKEND_URL}/food/", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

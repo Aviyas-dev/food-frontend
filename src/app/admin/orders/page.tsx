@@ -19,7 +19,7 @@ export default function AdminOrder() {
   // ✅ Захиалгуудыг татаж авах
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/food-order");
+      const response = await axios.get("${process.env.NEXT_PUBLIC_BACKEND_URL}/food-order");
       setOrders(response.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -29,7 +29,7 @@ export default function AdminOrder() {
   // ✅ Захиалгын төлөв шинэчлэх
   const updateDeliveryState = async (id: string, state: string) => {
     try {
-      const response = await axios.put(`http://localhost:8000/food-order/${id}`, {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food-order/${id}`, {
         deliveryState: state,
       });
 

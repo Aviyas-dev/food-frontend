@@ -25,7 +25,7 @@ export const Category = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const addCategory = async () => {
-    await fetch("http://localhost:8000/food-category", {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food-category`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const Category = () => {
   };
 
   const deleteCategory = async (id: string) => {
-    const res = await fetch(`http://localhost:8000/food-category/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food-category/${id}`, {
       method: "DELETE",
     });
 

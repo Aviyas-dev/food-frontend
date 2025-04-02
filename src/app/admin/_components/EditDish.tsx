@@ -19,7 +19,7 @@ export const EditDish = ({ food, id }: { food: FoodType; id: string }) => {
   const [editFood, setEditFood] = useState<FoodType>(food);
  
   const editDish = async () => {
-    await fetch(`http://localhost:8000/food/${food._id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/${food._id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export const EditDish = ({ food, id }: { food: FoodType; id: string }) => {
   };
  
   const deleteDish = async () =>{
-    await fetch(`http://localhost:8000/food/${food._id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/${food._id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

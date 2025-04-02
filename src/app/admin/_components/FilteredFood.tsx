@@ -20,7 +20,7 @@ export const FilteredFood = ({ _id, categoryName }: CategoryType) => {
  
   useEffect(() => {
     const fetchFood = async () => {
-      const response = await fetch("http://localhost:8000/food");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food`);
       const data = await response.json();
       setFoods(data);
     };
